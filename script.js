@@ -1,3 +1,7 @@
+function printMsg(id, fun) {
+    document.getElementById(id).innerHTML = fun;
+}
+
 const nums = [7, 2, 6, 3];
 const nums2 = [9, 6, 7, 4, 7, 2, 2, 4, 2, 3, 7, 7];
 const list = [3, 6, 2, 9, -1, 10];
@@ -8,9 +12,56 @@ const mze = [
     [1, 0, 1, 1, 1],
     [1, 0, 0, 0, 1]
 ]
+const strNum = "7234";
+const trans = [10,24,12,8,10,24];
+const tx = 1.2;
 
-function printMsg(id, fun) {
-    document.getElementById(id).innerHTML = fun;
+function taxTrans(transactions, taxRate) {
+    var numCalls = 0;
+    var map = new Map()
+    for (let i = 0; i < transactions.length; i++) {
+        let trans = transactions[i];
+        if (map.has(trans)) {
+            continue;
+        } else {
+            numCalls++;
+            map.set(trans, 1);
+        }
+    }
+    return numCalls;
+}
+
+function longestStr(n) {
+    var charArr = [];
+    var newN = n.toString(10);
+    for (var i = 0; i < newN.length; i++) {
+        charArr.push(newN.charAt(i));
+    }
+    var longestStrLen = 0;
+    for (let i = 0; i < charArr.length; i++) {
+        let count = 0;
+        let repeats = false;
+        let map = new Map()
+        let index = 0;
+        while (!repeats) {
+            if ((i + index) < charArr.length) {
+                let tmpChar = charArr[i + index];
+                if (map.has(tmpChar)) {
+                    repeats = true;
+                } else {
+                    map.set(tmpChar, 1);
+                    count++;
+                    index++;
+                }
+            } else {
+                break;
+            }
+        }
+        if (count > longestStrLen) {
+            longestStrLen = count;
+        }
+    }
+    return longestStrLen;
 }
 
 function merge(left, right) {
