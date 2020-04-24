@@ -1,15 +1,77 @@
 const nums = [7, 2, 6, 3];
+const nums2 = [9, 6, 7, 4, 7, 2, 2, 4, 2, 3, 7, 7];
 const list = [3, 6, 2, 9, -1, 10];
 const mze = [
-    [1,0,0,0,1],
-    [1,1,1,0,1],
-    [1,0,0,0,1],
-    [1,0,1,1,1],
-    [1,0,0,0,1]
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 1, 1, 1],
+    [1, 0, 0, 0, 1]
 ]
 
 function printMsg(id, fun) {
     document.getElementById(id).innerHTML = fun;
+}
+
+function merge(left, right) {
+    let merged = []
+    let l = 0
+    let r = 0;
+    while (l < left.length && r < right.length) {
+        if (left[l] < right[r]) {
+            merged.push(left[l]);
+            l++;
+        } else {
+            merged.push(right[r]);
+            r++;
+        }
+    }
+    return merged.concat(left.slice(l)).concat(right.slice(r));
+}
+
+function mergeSort(array) {
+    if (array.length <= 1) {
+        return array;
+    }
+    let middleIndex = Math.floor(array.length / 2);
+    let left = array.slice(0, middleIndex);
+    let right = array.slice(middleIndex, array.length);
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function flowers(pot) {
+    for (let i = 0; i < pot[0].length; i++) {
+        if (pot[0][i] === 1) {
+            continue;
+        }
+        var currentRow = 0;
+        var currentCol = i;
+        var lastMove = -1;
+        while (true) {
+            if (currentRow === (pot.length - 1)) {
+                return true;
+            }
+            if (((currentRow - 1) >= 0) && (pot[(currentRow - 1)][currentCol] === 0) && (lastMove !== 0)) { // Up
+                currentRow--;
+                lastMove = 2;
+                continue;
+            } else if (((currentCol + 1) >= 0) && (pot[currentRow][(currentCol + 1)] === 0) && (lastMove !== 1)) { // Right
+                currentCol++;
+                lastMove = 3;
+                continue;
+            } else if (((currentRow + 1) >= 0) && (pot[(currentRow + 1)][currentCol] === 0) && (lastMove !== 2)) { // Down
+                currentRow++;
+                lastMove = 0;
+                continue;
+            } else if (((currentCol - 1) >= 0) && (pot[currentRow][(currentCol - 1)] === 0) && (lastMove !== 3)) { // Left
+                currentCol--;
+                lastMove = 1;
+                continue;
+            }
+            return false;
+        }
+    }
+    return false;
 }
 
 function mazePath(maze, startRow, startCol, destRow, destCol) {
