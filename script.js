@@ -1,11 +1,15 @@
 function main() {
-    printMsg('largestNum', largestNum(nums));
-    printMsg('binaryTree', binaryTree(list));
-    printMsg('mazePath', mazePath(mze, 0, 1, 4, 3));
-    printMsg('mergeSort', mergeSort(nums2));
-    printMsg('longestStr', longestStr(strNum));
-    printMsg('taxTrans', taxTrans(trans, tx));
-    printMsg('treeDepth', treeDepth(tree));
+    printMsg('q1', q1());
+    printMsg('q2', q2());
+
+    // printMsg('largestNum', largestNum(nums));
+    // printMsg('binaryTree', binaryTree(list));
+    // printMsg('mazePath', mazePath(mze, 0, 1, 4, 3));
+    // printMsg('mergeSort', mergeSort(nums2));
+    // printMsg('longestStr', longestStr(strNum));
+    // printMsg('taxTrans', taxTrans(trans, tx));
+    // printMsg('treeDepth', treeDepth(tree));
+    // printMsg('fewestOccurrences', fewestOccurrences(numbers));
 }
 
 function printMsg(id, fun) {
@@ -26,6 +30,47 @@ const strNum = "7234";
 const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
 const tree = [1, 2, 3, 4, -1, -1];
+const numbers = [14, 941, 13, 10, 13, 941];
+
+function q1() {
+    return "Hello";
+}
+
+function q2() {
+    return "World";
+}
+
+function fewestOccurrences(numbers) {
+    if (numbers.length === 0) {
+        return [];
+    }
+    var nums = new Map();
+    for (let i = 0; i < numbers.length; i++) {
+        if (!nums.has(numbers[i])) {
+            nums.set(numbers[i], 1);
+        } else {
+            nums.set(numbers[i], nums.get(numbers[i]) + 1);
+        }
+    }
+    var fewestValue = -1;
+    for (const [key, value] of nums.entries()) {
+        if (fewestValue === -1) {
+            fewestValue = value;
+        } else {
+            let occurValue = value;
+            if (occurValue < fewestValue) {
+                fewestValue = occurValue;
+            }
+        }
+    }
+    var smallestOccurNums = [];
+    for (const [key, value] of nums.entries()) {
+        if (value === fewestValue) {
+            smallestOccurNums.push(key)
+        }
+    }
+    return smallestOccurNums.sort();
+}
 
 function treeDepth(tree) {
     const treeSize = tree.length;
