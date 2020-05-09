@@ -1,3 +1,13 @@
+function main() {
+    printMsg('largestNum', largestNum(nums));
+    printMsg('binaryTree', binaryTree(list));
+    printMsg('mazePath', mazePath(mze, 0, 1, 4, 3));
+    printMsg('mergeSort', mergeSort(nums2));
+    printMsg('longestStr', longestStr(strNum));
+    printMsg('taxTrans', taxTrans(trans, tx));
+    printMsg('treeDepth', treeDepth(tree));
+}
+
 function printMsg(id, fun) {
     document.getElementById(id).innerHTML = fun;
 }
@@ -13,8 +23,38 @@ const mze = [
     [1, 0, 0, 0, 1]
 ]
 const strNum = "7234";
-const trans = [10,24,12,8,10,24];
+const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
+const tree = [1, 2, 3, 4, -1, -1];
+
+function treeDepth(tree) {
+    const treeSize = tree.length;
+    if (treeSize === 0) {
+        return 0;
+    }
+    var total = 0;
+    var index = 0;
+    var increment = 1;
+    var found;
+    while (true) {
+        found = false;
+        for (let i = index; i < (index + increment); i++) {
+            if (i >= treeSize) {
+                return total;
+            }
+            if (tree[i] > -1) {
+                total++;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return total;
+        }
+        index += increment;
+        increment *= 2;
+    }
+}
 
 function taxTrans(transactions, taxRate) {
     var numCalls = 0;
