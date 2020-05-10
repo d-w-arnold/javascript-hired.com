@@ -26,7 +26,7 @@ function printMsg(id, fun) {
 }
 
 function main() {
-    printMsg('q1', q1());
+    printMsg('q1', q1(msgs));
     printMsg('q2', q2());
     printMsg('binaryTree', binaryTree(bt));
     printMsg('fewestOccurrences', fewestOccurrences(fo));
@@ -39,8 +39,42 @@ function main() {
     printMsg('treeDepth', treeDepth(td));
 }
 
-function q1() {
-    return "Hello";
+const msgs = ["ABC","ABC"];
+
+function q1(messages) {
+    class Emitter {
+        constructor(messages = []) {
+            this.messages = messages;
+            this.event = () => {
+            };
+        }
+
+        setEvent(fn) {
+            this.event = fn;
+        }
+
+        trigger() {
+            this.messages.forEach(message => this.event(message));
+        }
+    }
+
+    class Receiver {
+        constructor() {
+            this.messages = [];
+        }
+
+        ping(message) {
+            this.messages.push(message);
+        }
+    }
+
+    const myEmitter = new Emitter(messages);
+    const myReceiver = new Receiver();
+
+    myEmitter.setEvent(myReceiver.ping);
+    myEmitter.trigger();
+
+    return myReceiver.messages;
 }
 
 function q2() {
