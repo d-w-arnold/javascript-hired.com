@@ -27,7 +27,7 @@ function printMsg(id, fun) {
 
 function main() {
     printMsg('q1', q1(msgs));
-    printMsg('q2', q2());
+    printMsg('q2', q2(6));
     printMsg('binaryTree', binaryTree(bt));
     printMsg('fewestOccurrences', fewestOccurrences(fo));
     printMsg('flowerPot', flowers(fp));
@@ -39,11 +39,11 @@ function main() {
     printMsg('treeDepth', treeDepth(td));
 }
 
-const msgs = ["ABC","ABC"];
+const msgs = ["ABC", "ABC"];
 
 function q1(messages) {
     class Emitter {
-        constructor(messages = []) {
+        constructor(messages) {
             this.messages = messages;
             this.event = () => {
             };
@@ -77,8 +77,45 @@ function q1(messages) {
     return myReceiver.messages;
 }
 
-function q2() {
-    return "World";
+function fibonacci_series(n) {
+    if (n === 1) {
+        return [0, 1];
+    } else {
+        var s = fibonacci_series(n - 1);
+        s.push(s[s.length - 1] + s[s.length - 2]);
+        return s;
+    }
+}
+
+function isPrime(n) {
+    // If n is less than 2 or not an integer then by definition cannot be prime.
+    if (n < 2) {
+        return false
+    }
+    if (n !== Math.round(n)) {
+        return false
+    }
+    // Now assume that n is prime, we will try to prove that it is not.
+    var isPrime = true;
+    // Now check every whole number from 2 to the square root of n. If any of these divides n exactly, n cannot be prime.
+    for (var i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+            isPrime = false
+        }
+    }
+    // Finally return whether n is prime or not.
+    return isPrime;
+}
+
+function q2(n) {
+    var fibs = fibonacci_series(n);
+    var list = [];
+    for (const fib of fibs) {
+        if (isPrime(fib)) {
+            list.push(fib);
+        }
+    }
+    return list;
 }
 
 function binaryTree(arr) {
