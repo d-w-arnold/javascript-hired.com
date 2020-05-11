@@ -1,3 +1,23 @@
+function printMsg(id, fun) {
+    document.getElementById(id).innerHTML = fun;
+}
+
+function mainBrowser() {
+    printMsg('q1', q1());
+    printMsg('q2', q2());
+    printMsg('binaryTree', binaryTree(bt));
+    printMsg('emitterReceiver', emitterReceiver(msgs));
+    printMsg('fewestOccurrences', fewestOccurrences(fo));
+    printMsg('flowerPot', flowers(fp));
+    printMsg('largestNum', largestNum(ln));
+    printMsg('longestStr', longestStr(ls));
+    printMsg('mazePath', mazePath(mz, 0, 1, 4, 3));
+    printMsg('mergeSort', mergeSort(ms));
+    printMsg('primeFibNums', primeFibNums(6));
+    printMsg('taxTrans', taxTrans(trans, tx));
+    printMsg('treeDepth', treeDepth(td));
+}
+
 const bt = [3, 6, 2, 9, -1, 10];
 const fo = [14, 941, 13, 10, 13, 941];
 const msgs = ["ABC", "ABC"];
@@ -22,24 +42,23 @@ const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
 const td = [1, 2, 3, 4, -1, -1];
 
-function printMsg(id, fun) {
-    document.getElementById(id).innerHTML = fun;
-}
+mainNodeJs()
 
-function main() {
-    printMsg('q1', q1());
-    printMsg('q2', q2());
-    printMsg('binaryTree', binaryTree(bt));
-    printMsg('emitterReceiver', emitterReceiver(msgs));
-    printMsg('fewestOccurrences', fewestOccurrences(fo));
-    printMsg('flowerPot', flowers(fp));
-    printMsg('largestNum', largestNum(ln));
-    printMsg('longestStr', longestStr(ls));
-    printMsg('mazePath', mazePath(mz, 0, 1, 4, 3));
-    printMsg('mergeSort', mergeSort(ms));
-    printMsg('primeFibNums', primeFibNums(6));
-    printMsg('taxTrans', taxTrans(trans, tx));
-    printMsg('treeDepth', treeDepth(td));
+function mainNodeJs() {
+    var one = q1();
+    var two = q2();
+    var binT = binaryTree(bt);
+    var emitR = emitterReceiver(msgs);
+    var fewOcc = fewestOccurrences(fo);
+    var flow = flowers(fp);
+    var largNum = largestNum(ln);
+    var longStr = longestStr(ls);
+    var mzPth = mazePath(mz, 0, 1, 4, 3);
+    var merSor = mergeSort(ms);
+    var prmFibNum = primeFibNums(6);
+    var tax = taxTrans(trans, tx);
+    var trDep = treeDepth(td);
+    console.log("Finished");
 }
 
 function q1() {
