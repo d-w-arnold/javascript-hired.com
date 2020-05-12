@@ -14,6 +14,7 @@ function mainBrowser() {
     printMsg('mazePath', mazePath(mz, 0, 1, 4, 3));
     printMsg('mergeSort', mergeSort(ms));
     printMsg('primeFibNums', primeFibNums(6));
+    printMsg('rotateMatrix', rotateMatrix(matrix));
     printMsg('taxTrans', taxTrans(trans, tx));
     printMsg('treeDepth', treeDepth(td));
 }
@@ -38,6 +39,11 @@ const mz = [
     [1, 0, 0, 0, 1]
 ]
 const ms = [9, 6, 7, 4, 7, 2, 2, 4, 2, 3, 7, 7];
+const matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+]
 const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
 const td = [1, 2, 3, 4, -1, -1];
@@ -56,6 +62,7 @@ function mainNodeJs() {
     var mzPth = mazePath(mz, 0, 1, 4, 3);
     var merSor = mergeSort(ms);
     var prmFibNum = primeFibNums(6);
+    var rotMat = rotateMatrix(matrix);
     var tax = taxTrans(trans, tx);
     var trDep = treeDepth(td);
     console.log("Finished");
@@ -347,6 +354,17 @@ function primeFibNums(n) {
         }
     }
     return list;
+}
+function rotateMatrix(matrix) {
+    var newMatrix = [];
+    for (let i = 0; i < matrix[0].length; i++) {
+        let tmp = [];
+        for (let j = (matrix.length - 1); j >= 0; j--) {
+            tmp.push(matrix[j][i]);
+        }
+        newMatrix.push(tmp);
+    }
+    return newMatrix;
 }
 
 function taxTrans(transactions, taxRate) {
