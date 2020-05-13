@@ -2,9 +2,10 @@ function printMsg(id, fun) {
     document.getElementById(id).innerHTML = fun;
 }
 
+/**
+ * Main function called during onload of index.html
+ */
 function mainBrowser() {
-    printMsg('q1', q1());
-    printMsg('q2', q2());
     printMsg('binaryTree', binaryTree(bt));
     printMsg('emitterReceiver', emitterReceiver(msgs));
     printMsg('fewestOccurrences', fewestOccurrences(fo));
@@ -40,9 +41,9 @@ const mz = [
 ]
 const ms = [9, 6, 7, 4, 7, 2, 2, 4, 2, 3, 7, 7];
 const matrix = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9]
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
 ]
 const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
@@ -50,9 +51,10 @@ const td = [1, 2, 3, 4, -1, -1];
 
 mainNodeJs()
 
+/**
+ * Main function for debugging with Node.js in WebStorm
+ */
 function mainNodeJs() {
-    var one = q1();
-    var two = q2();
     var binT = binaryTree(bt);
     var emitR = emitterReceiver(msgs);
     var fewOcc = fewestOccurrences(fo);
@@ -68,18 +70,25 @@ function mainNodeJs() {
     console.log("Finished");
 }
 
-function q1() {
-    return "Hello";
-}
-
-function q2() {
-    return "World";
-}
-
+/**
+ * For a given array, eg. [3, 6, 2, 9, -1, 10], which represents a tree: (-1 means a hidden node)
+ *
+ *             3
+ *           /  \
+ *         6     2
+ *       /     /
+ *      9     10
+ *
+ * Work out which branch (either Left or Right) has the greatest total.
+ * eg. (9 + 6) > (10 + 2) = "Left"
+ *
+ * @param arr An array of numbers denoting values of nodes in a tree.
+ * @returns {string} Denotes which branch has the greatest total, an empty string otherwise.
+ */
 function binaryTree(arr) {
-    var index = 0; // Overall index in arr
-    var interval = 1; // Doubles each time
-    var position = 1; // Position with an interval
+    var index = 0; // Overall index in arr.
+    var interval = 1; // Doubles each time.
+    var position = 1; // Position with an interval.
     var leftTotal = 0;
     var rightTotal = 0;
     while (index < arr.length) {
@@ -113,6 +122,17 @@ function binaryTree(arr) {
     }
 }
 
+/**
+ * A basic sender and receiver which needed fixing.
+ *
+ * Solution:
+ * Changed Receiver.ping() from this.messages.push(...) to obj.messages.push(...) - 'obj' being the Receiver object.
+ * Emitter.trigger() needed to be passed the Receiver object, so Receiver.ping() could store the messages
+ * in the receivers list of messages, not the emitters list of messages.
+ *
+ * @param messages The messages sent by the emitter.
+ * @returns {[]} The messaged received by the receiver.
+ */
 function emitterReceiver(messages) {
     class Emitter {
         constructor(messages) {
@@ -149,6 +169,16 @@ function emitterReceiver(messages) {
     return myReceiver.messages;
 }
 
+/**
+ * A list of numbers, eg. [14, 941, 13, 10, 13, 941]
+ *
+ * Both 14 and 10 only occur once, which is the smallest number of occurrences of all numbers in this array.
+ *
+ * We return a list of these numbers in ascending order: [10, 14]
+ *
+ * @param numbers An array of numbers.
+ * @returns {[]} A list of numbers which all occur the fewest number of times, in ascending order.
+ */
 function fewestOccurrences(numbers) {
     if (numbers.length === 0) {
         return [];
@@ -181,6 +211,23 @@ function fewestOccurrences(numbers) {
     return smallestOccurNums.sort();
 }
 
+/**
+ * Figure out if there is a path from the top layer of the flower pot to the bottom layer of the flower pot.
+ *
+ * 0 - Can be navigated.
+ * 1 - Cannot be navigated.
+ *
+ * E.g.    [[1, 0, 0, 0, 1],
+ *          [1, 1, 1, 0, 1],
+ *          [1, 0, 0, 0, 1],
+ *          [1, 0, 1, 1, 1],
+ *          [1, 0, 1, 1, 1]]
+ *
+ * The above example would return: true
+ *
+ * @param pot A 2-D matrix (nested arrays) made up of 0s and 1s.
+ * @returns {boolean} True or false, is there a path from the the top of the flower pot to the bottom.
+ */
 function flowers(pot) {
     for (let i = 0; i < pot[0].length; i++) {
         if (pot[0][i] === 1) {
@@ -216,6 +263,12 @@ function flowers(pot) {
     return false;
 }
 
+/**
+ * Find the largest number in an array of numbers.
+ *
+ * @param numbers The array of numbers.
+ * @returns {number} The largest number out of all numbers, else return 0.
+ */
 function largestNum(numbers) {
     var largestNumber = 0;
     for (let i = 0; i < numbers.length; i++) {
@@ -227,11 +280,18 @@ function largestNum(numbers) {
     return largestNumber;
 }
 
+/**
+ * Given a string of numbers, find the length of the longest string of numbers with no repeated chars.
+ *
+ * Eg. "723473", would yield the answer: 4
+ *
+ * @param n The string of numbers.
+ * @returns {number} The length of the longest string of numbers with no repeated chars.
+ */
 function longestStr(n) {
     var charArr = [];
-    var newN = n.toString(10);
-    for (var i = 0; i < newN.length; i++) {
-        charArr.push(newN.charAt(i));
+    for (let i = 0; i < n.length; i++) {
+        charArr.push(n.charAt(i));
     }
     var longestStrLen = 0;
     for (let i = 0; i < charArr.length; i++) {
@@ -260,6 +320,28 @@ function longestStr(n) {
     return longestStrLen;
 }
 
+/**
+ * Given a 2-D matrix (nested arrays), find out if there exists a path
+ * between a given set of start coordinates and end coordinates.
+ *
+ * 0 - Can be navigated.
+ * 1 - Cannot be navigated.
+ *
+ * Eg.    [[1, 0, 0, 0, 1],   Start: (0,1)
+ *         [1, 1, 1, 0, 1],   End: (4,3)
+ *         [1, 0, 0, 0, 1],
+ *         [1, 0, 1, 1, 1],
+ *         [1, 0, 0, 0, 1]]
+ *
+ * This would return: true
+ *
+ * @param maze The 2-D matrix (nested arrays).
+ * @param startRow The start row (eg. 0).
+ * @param startCol The start column (eg. 1).
+ * @param destRow The end row (eg. 4).
+ * @param destCol The end column (eg. 3).
+ * @returns {boolean} True or false, whether a path exists start and end coordinates.
+ */
 function mazePath(maze, startRow, startCol, destRow, destCol) {
     var currentRow = startRow;
     var currentCol = startCol;
@@ -289,6 +371,9 @@ function mazePath(maze, startRow, startCol, destRow, destCol) {
     }
 }
 
+/**
+ * Helper function for mergeSort() - see below.
+ */
 function merge(left, right) {
     var merged = []
     var l = 0
@@ -305,6 +390,12 @@ function merge(left, right) {
     return merged.concat(left.slice(l)).concat(right.slice(r));
 }
 
+/**
+ * Sorts an array of by means of divide-and-conquer merge sort logic.
+ *
+ * @param array An array of numbers for sorting.
+ * @returns {[]} A sorted array of numbers (ascending order).
+ */
 function mergeSort(array) {
     if (array.length <= 1) {
         return array;
@@ -315,6 +406,9 @@ function mergeSort(array) {
     return merge(mergeSort(left), mergeSort(right));
 }
 
+/**
+ * Helper function for primeFibNums() - see below.
+ */
 function fibonacci_series(n) {
     if (n === 1) {
         return [0, 1];
@@ -325,6 +419,9 @@ function fibonacci_series(n) {
     }
 }
 
+/**
+ * Helper function for primeFibNums() - see below.
+ */
 function isPrime(n) {
     // If n is less than 2 or not an integer then by definition cannot be prime.
     if (n < 2) {
@@ -336,7 +433,7 @@ function isPrime(n) {
     // Now assume that n is prime, we will try to prove that it is not.
     var isPrime = true;
     // Now check every whole number from 2 to the square root of n. If any of these divides n exactly, n cannot be prime.
-    for (var i = 2; i <= Math.sqrt(n); i++) {
+    for (let i = 2; i <= Math.sqrt(n); i++) {
         if (n % i === 0) {
             isPrime = false
         }
@@ -345,6 +442,18 @@ function isPrime(n) {
     return isPrime;
 }
 
+/**
+ * Gets the first n fibonacci numbers and returns the list of only the prime ones.
+ *
+ * Eg. n == 6
+ *
+ * The first 6 fibonacci numbers are: 0, 1, 1, 2, 3, 5
+ *
+ * This would return: [2, 3, 5]
+ *
+ * @param n The number of fibonacci numbers.
+ * @returns {[]} The list of prime fibonacci numbers.
+ */
 function primeFibNums(n) {
     var fibs = fibonacci_series(n);
     var list = [];
@@ -355,6 +464,23 @@ function primeFibNums(n) {
     }
     return list;
 }
+
+/**
+ * Rotate a 2-D matrix (nested arrays) of (n x n) size 90' degrees clockwise.
+ *
+ * Eg.    [[1, 2, 3],
+ *         [4, 5, 6],
+ *         [7, 8, 9]]
+ *
+ * The result:
+ *
+ *        [[7, 4, 1],
+ *         [8, 5, 2],
+ *         [9, 6, 3]]
+ *
+ * @param matrix The 2-D matrix (nested arrays) to be rotated.
+ * @returns {[]} The rotated matrix.
+ */
 function rotateMatrix(matrix) {
     var newMatrix = [];
     for (let i = 0; i < matrix[0].length; i++) {
@@ -367,14 +493,19 @@ function rotateMatrix(matrix) {
     return newMatrix;
 }
 
+/**
+ * Get the number of unique transactions.
+ *
+ * @param transactions An array of transactions.
+ * @param taxRate The tax rate for all transactions.
+ * @returns {number} The number of unique transactions from the list of all transactions.
+ */
 function taxTrans(transactions, taxRate) {
     var numCalls = 0;
     var map = new Map()
     for (let i = 0; i < transactions.length; i++) {
         let trans = transactions[i];
-        if (map.has(trans)) {
-            continue;
-        } else {
+        if (!map.has(trans)) {
             numCalls++;
             map.set(trans, 1);
         }
@@ -382,6 +513,20 @@ function taxTrans(transactions, taxRate) {
     return numCalls;
 }
 
+/**
+ * For a given array, eg. [1, 2, 3, 4, -1, -1], which represents a tree: (-1 means a hidden node)
+ *
+ *             1
+ *           /  \
+ *         2     3
+ *       /
+ *      4
+ *
+ * The depth of this tree is: 3
+ *
+ * @param tree An array of numbers denoting values of nodes in a tree.
+ * @returns {number} The depth of the tree.
+ */
 function treeDepth(tree) {
     const treeSize = tree.length;
     if (treeSize === 0) {
