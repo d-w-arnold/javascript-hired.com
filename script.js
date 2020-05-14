@@ -47,6 +47,11 @@ const matrix = [
 ]
 const trans = [10, 24, 12, 8, 10, 24];
 const tx = 1.2;
+const mz2 = [
+    [0, 0, 1],
+    [1, 0, 1],
+    [1, 0, 0]
+]
 const td = [1, 2, 3, 4, -1, -1];
 
 mainNodeJs()
@@ -66,6 +71,7 @@ function mainNodeJs() {
     var prmFibNum = primeFibNums(6);
     var rotMat = rotateMatrix(matrix);
     var tax = taxTrans(trans, tx);
+    var topLeft = topLeftToBottomRight(mz2, 3);
     var trDep = treeDepth(td);
     console.log("Finished");
 }
@@ -208,7 +214,9 @@ function fewestOccurrences(numbers) {
             smallestOccurNums.push(key)
         }
     }
-    return smallestOccurNums.sort();
+    return smallestOccurNums.sort(function (a, b) {
+        return a - b;
+    });
 }
 
 /**
@@ -511,6 +519,58 @@ function taxTrans(transactions, taxRate) {
         }
     }
     return numCalls;
+}
+
+/**
+ * Given a 2-D matrix (nested arrays) of size (n x n), find out if there exists a path
+ * between the top left corner (0,0) and the bottom right corner (n-1, n-1).
+ *
+ * 0 - Can be navigated.
+ * 1 - Cannot be navigated.
+ *
+ * Eg.    [[0, 0, 1],
+ *         [1, 0, 1],
+ *         [1, 0, 0]]
+ *
+ * This would return: true
+ *
+ * @param maze The 2-D matrix (nested arrays).
+ * @param n The size of the matrix row and columns.
+ * @returns {boolean} True or false, whether a path exists from top left to bottom right.
+ */
+function topLeftToBottomRight(maze, n) {
+    if (maze[0][0] === 1) {
+        return false;
+    }
+    if (maze[n - 1][n - 1] === 1) {
+        return false;
+    }
+    var currentRow = 0;
+    var currentCol = 0;
+    var lastMove = -1;
+    while (true) {
+        if (currentRow === (n - 1) && currentCol === (n - 1)) {
+            return true;
+        }
+        if (((currentRow - 1) >= 0) && (maze[(currentRow - 1)][currentCol] === 0) && (lastMove !== 0)) { // Up
+            currentRow--;
+            lastMove = 2;
+            continue;
+        } else if (((currentCol + 1) >= 0) && (maze[currentRow][(currentCol + 1)] === 0) && (lastMove !== 1)) { // Right
+            currentCol++;
+            lastMove = 3;
+            continue;
+        } else if (((currentRow + 1) >= 0) && (maze[(currentRow + 1)][currentCol] === 0) && (lastMove !== 2)) { // Down
+            currentRow++;
+            lastMove = 0;
+            continue;
+        } else if (((currentCol - 1) >= 0) && (maze[currentRow][(currentCol - 1)] === 0) && (lastMove !== 3)) { // Left
+            currentCol--;
+            lastMove = 1;
+            continue;
+        }
+        return false;
+    }
 }
 
 /**
